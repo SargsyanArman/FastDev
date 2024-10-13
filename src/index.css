@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+    text-decoration: none;
+    transition: 0.1s ease-in-out;
+  }
+
+  .icon-header {
+    color: #ef4444;
+    cursor: pointer;
+  }
+
+  .btn-2 {
+    width: 79px;
+    height: 36px;
+    font-weight: 700;
+    background-color: unset;
+    border: none;
+  }
+
+  .btn-2:hover {
+    background-color: #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  /* Scroll Sidebar left */
+
+  .sidebar::-webkit-scrollbar {
+    width: 4px; 
+  }
+    
+  .sidebar::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+    
+  .sidebar::-webkit-scrollbar-thumb {
+     background: #888; 
+    border-radius: 5px; 
+  }
+    
+  .sidebar::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+
+  /* Scroll main */
+
+  .scroll-main::-webkit-scrollbar {
+    width: 4px; 
+  }
+    
+  .scroll-main::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+    
+  .scroll-main::-webkit-scrollbar-thumb {
+     background: #888; 
+    border-radius: 5px; 
+  }
+    
+  .scroll-main::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+
+
+.main-header-btns {
+    width: 117px;
+    height: 46px;
+    font-size: 14px;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+.tag {
+  color: #71717a;
+  background-color: #cbd5e1;
+  border: none;
+  font-size: 10px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  margin-right: 8px;
+}
+
+.tag:hover {
+  background-color: #818cf8;
+  color: white;
+  cursor: pointer;
+}
+
+.sidebar-right-btnRight {
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.sidebar-right::-webkit-scrollbar {
+  width: 4px; 
+}
+
+.sidebar-right::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.sidebar-right::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+.sidebar-right::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
