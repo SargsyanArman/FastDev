@@ -4,6 +4,7 @@ import SignIn from "./Components/Routes/SignIn/SignIn";
 import Home from "./Components/Routes/Home";
 import SignUp from "./Components/Routes/SignUp/SignUp";
 import MainContent from "./Components/Content/MainContent/MainContent";
+import Profile from "./Components/Routes/Profile/Profile";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -15,7 +16,8 @@ const App = () => {
           path: '/',
           element: <Content />,
           children: [
-            { index: true, element: <MainContent /> }
+            { index: true, element: <MainContent /> },
+            { path: 'profile/:userProfile', element: <Profile /> },
           ]
         },
         { path: 'signin', element: <SignIn /> },

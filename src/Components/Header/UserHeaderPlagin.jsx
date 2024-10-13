@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { removeUser } from '../../Store/Slices/UserSlices';
-import userLogo from '../../images/isLogo.png'
+import userLogo from '../../images/isLogo.png';
 
 const UserHeaderPlagin = () => {
     const [userOpen, setUserOpen] = useState(false);
@@ -32,11 +32,9 @@ const UserHeaderPlagin = () => {
                                 <li>
                                     <div className='flex p-3'>
                                         <div>
-                                            {user?.logo
-                                                ?
-                                                <img src={user.logo} alt="user logo" />
-                                                :
-                                                <img src={userLogo} className='w-[45px]' />
+                                            {user.logo
+                                                ? <img src={user.logo} alt="user logo" />
+                                                : <img src={userLogo} className='w-[45px]' alt="Default user logo" />
                                             }
                                         </div>
                                         <div className='flex flex-col px-3 pt-1 gap-1'>
@@ -45,7 +43,9 @@ const UserHeaderPlagin = () => {
                                         </div>
                                     </div>
                                 </li>
-                                <li className='p-3 hover:bg-zinc-300'><i className="fa-solid fa-user"></i> My Profile </li>
+                                <li className='p-3 hover:bg-zinc-300' onClick={() => navigate(`/profile/${user.id}`)}>
+                                    <i className="fa-solid fa-user"></i> My Profile
+                                </li>
                                 <li className='p-3 hover:bg-zinc-300'><i className="fa-solid fa-user"></i> Followers </li>
                                 <li className='p-3 hover:bg-zinc-300'><i className="fa-solid fa-user"></i> Collections </li>
                                 <li className='p-3 hover:bg-zinc-300'><i className="fa-solid fa-user"></i> Notifications </li>
