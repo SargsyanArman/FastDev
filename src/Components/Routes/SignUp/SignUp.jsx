@@ -28,7 +28,23 @@ const SignUp = () => {
             await setDoc(doc(db, "users", user.uid), {
                 fullName: formData.fullName,
                 email: user.email,
-                createdAt: new Date()
+                createdAt: new Date(),
+                post: [],
+                question: [],
+                followedTags: [],
+                badges: [
+                    { goldBadge: 0 },
+                    { silverBadge: 0 },
+                    { bronzeBadge: 0 }
+                ],
+                stats: [
+                    { totalFollowers: 0 },
+                    { totalFollowing: 0 },
+                    { totalPosts: 0 },
+                    { totalQuestions: 0 },
+                    { totalAnswers: 0 },
+                    { totalComments: 0 },
+                ],
             });
 
             navigate('/signin');
