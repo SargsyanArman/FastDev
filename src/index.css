@@ -3,82 +3,82 @@
 @tailwind utilities;
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Inter", sans-serif;
-    text-decoration: none;
-    transition: 0.1s ease-in-out;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+  text-decoration: none;
+  transition: 0.1s ease-in-out;
+}
 
-  .icon-header {
-    color: #ef4444;
-    cursor: pointer;
-  }
+.icon-header {
+  color: #ef4444;
+  cursor: pointer;
+}
 
-  .btn-2 {
-    width: 79px;
-    height: 36px;
-    font-weight: 700;
-    background-color: unset;
-    border: none;
-  }
+.btn-2 {
+  width: 79px;
+  height: 36px;
+  font-weight: 700;
+  background-color: unset;
+  border: none;
+}
 
-  .btn-2:hover {
-    background-color: #e2e8f0;
-    border-radius: 8px;
-    font-size: 14px;
-    cursor: pointer;
-  }
+.btn-2:hover {
+  background-color: #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
 
-  /* Scroll Sidebar left */
+/* Scroll Sidebar left */
 
-  .sidebar::-webkit-scrollbar {
-    width: 4px; 
-  }
-    
-  .sidebar::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-  }
-    
-  .sidebar::-webkit-scrollbar-thumb {
-     background: #888; 
-    border-radius: 5px; 
-  }
-    
-  .sidebar::-webkit-scrollbar-thumb:hover {
-    background: #555; 
-  }
+.sidebar::-webkit-scrollbar {
+  width: 4px;
+}
 
-  /* Scroll main */
+.sidebar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
 
-  .scroll-main::-webkit-scrollbar {
-    width: 4px; 
-  }
-    
-  .scroll-main::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-  }
-    
-  .scroll-main::-webkit-scrollbar-thumb {
-     background: #888; 
-    border-radius: 5px; 
-  }
-    
-  .scroll-main::-webkit-scrollbar-thumb:hover {
-    background: #555; 
-  }
+.sidebar::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Scroll main */
+
+.scroll-main::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scroll-main::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.scroll-main::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+.scroll-main::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 
 
 .main-header-btns {
-    width: 117px;
-    height: 46px;
-    font-size: 14px;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
+  width: 117px;
+  height: 46px;
+  font-size: 14px;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
 
 .tag {
   color: #71717a;
@@ -102,7 +102,7 @@
 }
 
 .sidebar-right::-webkit-scrollbar {
-  width: 4px; 
+  width: 4px;
 }
 
 .sidebar-right::-webkit-scrollbar-track {
@@ -116,4 +116,8 @@
 
 .sidebar-right::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.root {
+  height: 100vh;
 }
