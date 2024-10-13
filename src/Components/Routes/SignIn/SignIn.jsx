@@ -5,6 +5,8 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../../firebase';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../../Store/Slices/UserSlices';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../../../firebase';
 
 const SignIn = () => {
     const navigate = useNavigate();
@@ -20,10 +22,14 @@ const SignIn = () => {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
+            const userDoc = await getDoc(doc(db, 'users', user.uid));
+            const userData = userDoc.data();
+
             dispatch(setUser({
                 email: user.email,
                 token: user.accessToken,
                 id: user.uid,
+                fullName: userData.fullName || null
             }));
 
             navigate('/');
