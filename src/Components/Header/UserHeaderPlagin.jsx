@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 const UserHeaderPlagin = () => {
     const [userOpen, setUserOpen] = useState(false)
     const navigate = useNavigate()
+    const user = useSelector((state) => state.user);
+    console.log(user);
+
 
     const handleUserClick = () => {
         setUserOpen(!userOpen)
