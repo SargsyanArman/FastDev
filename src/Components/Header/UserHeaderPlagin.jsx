@@ -2,14 +2,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { removeUser } from '../../Store/Slices/UserSlices';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
 import userLogo from '../../images/isLogo.png';
 
 const UserHeaderPlagin = () => {
     const [userOpen, setUserOpen] = useState(false);
+    const [userData, setUserData] = useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
-    const userMenuRef = useRef(null); // для отслеживания кликов вне меню
+    const userMenuRef = useRef(null);
 
     const handleUserClick = () => {
         setUserOpen(!userOpen);
@@ -20,7 +23,6 @@ const UserHeaderPlagin = () => {
         navigate('/');
     };
 
-    // Закрытие меню при клике вне его
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
@@ -32,6 +34,29 @@ const UserHeaderPlagin = () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
+
+    useEffect(() => {
+        if (user.id) {
+            const fetchUserData = async () => {
+                try {
+                    const docRef = doc(db, "users", user.id);
+                    const docSnap = await getDoc(docRef);
+
+                    if (docSnap.exists()) {
+                        setUserData(docSnap.data());
+                    } else {
+                        console.log("User not found");
+                    }
+                } catch (error) {
+                    console.error("Error fetching user data:", error);
+                }
+            };
+
+            fetchUserData();
+        }
+    }, [user.id]);
+
+    console.log(userData);
 
     return (
         <div>
