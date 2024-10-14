@@ -54,9 +54,8 @@ const UserHeaderPlagin = () => {
 
             fetchUserData();
         }
-    }, [user.id]);
+    }, [user.id, userData]);
 
-    console.log(userData);
 
     return (
         <div>
@@ -70,9 +69,9 @@ const UserHeaderPlagin = () => {
                                 <li>
                                     <div className='flex p-3'>
                                         <div>
-                                            {user.logo
-                                                ? <img src={user.logo} alt="user logo" />
-                                                : <img src={userLogo} className='w-[45px]' alt="Default user logo" />
+                                            {userData?.photo
+                                                ? <img src={userData.photo} className='w-[45px] h-[45px] rounded-full' alt="user logo" />
+                                                : <img src={userLogo} className='w-[45px] h-[45px]' alt="Default user logo" />
                                             }
                                         </div>
                                         <div className='flex flex-col px-3 pt-1 gap-1'>

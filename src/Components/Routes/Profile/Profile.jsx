@@ -41,8 +41,8 @@ const Profile = () => {
             await uploadBytes(storageRef, file);
             const downloadURL = await getDownloadURL(storageRef);
             const userDocRef = doc(db, "users", userProfile);
-            await updateDoc(userDocRef, { photoURL: downloadURL });
-            setUser(prevUser => ({ ...prevUser, photoURL: downloadURL }));
+            await updateDoc(userDocRef, { photo: downloadURL });
+            setUser(prevUser => ({ ...prevUser, photo: downloadURL }));
         } catch (error) {
             console.error("Error uploading file:", error);
         }
@@ -63,7 +63,7 @@ const Profile = () => {
             <div className='flex flex-col-reverse items-start sm:flex-row'>
                 <div className='mt-3 flex flex-col items-start gap-4 lg:flex-row'>
                     <div className='relative h-[140px] w-[140px] rounded-full'>
-                        <img src={user?.photoURL || logo} alt="user logo" className='rounded-[100%] h-[8.5rem]' />
+                        <img src={user?.photo || logo} alt="user logo" className='rounded-[100%] h-[8.5rem]' />
                         <label htmlFor="file-upload" className="absolute bottom-0 right-0 cursor-pointer rounded-full bg-white p-1 hover:bg-gray-200">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-camera"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>
                             <input id="file-upload" className="hidden" accept="image/*" type="file" onChange={handleFileUpload} />
