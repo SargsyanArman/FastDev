@@ -20,15 +20,10 @@ const AllAuthors = () => {
         const userName = user.fullName?.toLowerCase() || '';
         return userName.includes(searchTerm.toLowerCase());
     });
-
-    // Определяем количество страниц
     const totalPages = Math.ceil(filteredUsers.length / authorsPerPage);
-
-    // Вычисляем авторов для текущей страницы
     const startIndex = (currentPage - 1) * authorsPerPage;
     const currentAuthors = filteredUsers.slice(startIndex, startIndex + authorsPerPage);
 
-    // Обработчики для переключения страниц
     const handleNextPage = () => {
         if (currentPage < totalPages) {
             setCurrentPage((prevPage) => prevPage + 1);
@@ -51,7 +46,7 @@ const AllAuthors = () => {
                 value={searchTerm}
                 onChange={(e) => {
                     setSearchTerm(e.target.value);
-                    setCurrentPage(1); // Сбрасываем на первую страницу при поиске
+                    setCurrentPage(1);
                 }}
             />
             {filteredUsers.length === 0 && searchTerm && (
@@ -63,7 +58,6 @@ const AllAuthors = () => {
                 ))}
             </div>
 
-            {/* Пагинация */}
             <div className="flex justify-center mt-4">
                 <button
                     onClick={handlePreviousPage}
