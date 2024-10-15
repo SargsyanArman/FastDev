@@ -20,7 +20,3 @@ const SidebarR = () => {
 }
 
 export default SidebarR
-
-//   width: 319px;
-// margin-top: 56px;
-// overflow-y: auto;
