@@ -8,6 +8,7 @@ import Profile from "./Components/Routes/Profile/Profile";
 import AllAuthors from "./Components/Content/MainContent/Authors/AllAuthors";
 import CreatePost from "./Components/Routes/CreatePost/CreatePost";
 import AllPosts from "./Components/Content/MainContent/BodyMainContent/Posts/AllPosts";
+import Post from "./Components/Routes/Post/Post";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -24,6 +25,8 @@ const App = () => {
             { path: 'all-authors', element: <AllAuthors /> },
             { path: 'create-post', element: <CreatePost /> },
             { path: 'all-posts', element: <AllPosts /> },
+            { path: 'posts/:post', element: <Post /> },
+
           ]
         },
         { path: 'signin', element: <SignIn /> },
