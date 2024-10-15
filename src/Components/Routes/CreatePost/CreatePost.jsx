@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { db, storage } from '../../../firebase';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, doc, updateDoc, getDoc } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { useSelector } from 'react-redux';
 
@@ -44,6 +44,21 @@ const CreatePost = () => {
                 author: user.fullName
             };
             await addDoc(collection(db, 'posts'), newPost);
+
+            const userRef = doc(db, "users", user.id);
+            const docSnap = await getDoc(userRef);
+
+            if (!docSnap.exists()) {
+                console.log('User not found');
+                return;
+            }
+
+            const currUser = docSnap.data();
+
+            await updateDoc(userRef, {
+                'stats.2.totalPosts': (currUser.stats[2]?.totalPosts || 0) + 1
+            });
+
             alert('Post created successfully!');
             setTitle('');
             setDescription('');
@@ -54,6 +69,7 @@ const CreatePost = () => {
             setIsUploading(false);
         }
     };
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -93,6 +109,11 @@ const CreatePost = () => {
                     </button>
                 </div>
             </form>
+
+            <p className="text-red-600 text-sm mt-4">
+                Note: Only an admin can edit or delete posts after they have been added.
+            </p>
+
         </div>
     );
 };

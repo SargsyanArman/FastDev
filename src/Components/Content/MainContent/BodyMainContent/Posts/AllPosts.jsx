@@ -24,7 +24,6 @@ const AllPosts = () => {
     const indexOfFirstPost = indexOfLastPost - postsPerPage;
     const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
-    // Расчет общего количества страниц
     const totalPages = Math.ceil(posts.length / postsPerPage);
 
     const nextPage = () => {
