@@ -5,7 +5,6 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import logo from '../../../images/isLogo.png';
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useSelector } from 'react-redux';
-import { current } from '@reduxjs/toolkit';
 
 const Profile = () => {
     const { userProfile } = useParams();
