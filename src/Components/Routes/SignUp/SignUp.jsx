@@ -32,6 +32,7 @@ const SignUp = () => {
                 post: [],
                 question: [],
                 followedTags: [],
+                followers: [],
                 badges: [
                     { goldBadge: 0 },
                     { silverBadge: 0 },

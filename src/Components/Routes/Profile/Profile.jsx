@@ -2,14 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { db } from '../../../firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import logo from '../../../images/isLogo.png'
+import logo from '../../../images/isLogo.png';
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { useSelector } from 'react-redux';
 
 const Profile = () => {
     const { userProfile } = useParams();
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [isFollowing, setIsFollowing] = useState(false);
     const storage = getStorage();
+
+    // Получаем данные текущего пользователя из Redux
+    const currentUserEmail = useSelector(state => state.user.email);
+
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -18,19 +24,21 @@ const Profile = () => {
 
                 if (docSnap.exists()) {
                     setUser(docSnap.data());
+                    // Проверяем, подписан ли текущий пользователь
+                    setIsFollowing(docSnap.data().followers.includes(currentUserEmail));
                 } else {
-                    setUser({ fullName: "User not found" });
+                    setUser({ fullName: "User not found", stats: [] });
                 }
             } catch (error) {
                 console.error("Error fetching user data:", error);
-                setUser({ fullName: "Error fetching user" });
+                setUser({ fullName: "Error fetching user", stats: [] });
             } finally {
                 setLoading(false);
             }
         };
 
         fetchUserData();
-    }, [userProfile]);
+    }, [userProfile, currentUserEmail, user]);
 
     const handleFileUpload = async (e) => {
         const file = e.target.files[0];
@@ -54,6 +62,27 @@ const Profile = () => {
         return date.toLocaleDateString(undefined, options);
     };
 
+    const handleFollow = async () => {
+        try {
+            const userDocRef = doc(db, "users", userProfile);
+            if (isFollowing) {
+                await updateDoc(userDocRef, {
+                    followers: user.followers.filter(follower => follower !== currentUserEmail), // Logic for unfollow
+                    'stats.0.totalFollowers': (user.stats[0]?.totalFollowers || 0) - 1
+                });
+                setIsFollowing(false);
+            } else {
+                await updateDoc(userDocRef, {
+                    followers: [...user.followers, currentUserEmail],
+                    'stats.0.totalFollowers': (user.stats[0]?.totalFollowers || 0) + 1 // Logic for follow
+                });
+                setIsFollowing(true);
+            }
+        } catch (error) {
+            console.error("Error updating follow status:", error);
+        }
+    };
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -65,7 +94,10 @@ const Profile = () => {
                     <div className='relative h-[140px] w-[140px] rounded-full'>
                         <img src={user?.photo || logo} alt="user logo" className='rounded-[100%] h-[8.5rem]' />
                         <label htmlFor="file-upload" className="absolute bottom-0 right-0 cursor-pointer rounded-full bg-white p-1 hover:bg-gray-200">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-camera"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-camera">
+                                <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path>
+                                <circle cx="12" cy="13" r="3"></circle>
+                            </svg>
                             <input id="file-upload" className="hidden" accept="image/*" type="file" onChange={handleFileUpload} />
                         </label>
                     </div>
@@ -74,12 +106,18 @@ const Profile = () => {
                     <h1 className=' text-[25px] font-bold text-slate-800'>{user?.fullName}</h1>
                     <p className=' text-zinc-600 '>{user?.email}</p>
                     <div>{user?.createdAt && <p><i className="fa-solid fa-calendar text-zinc-600 "></i> Created {formatDate(user.createdAt)}</p>}</div>
+                    <button
+                        onClick={handleFollow}
+                        className={`mt-4 py-2 px-4 rounded ${isFollowing ? 'bg-gray-300' : 'bg-blue-500 hover:bg-blue-600'} text-white`}
+                    >
+                        {isFollowing ? 'Unfollow' : 'Follow'}
+                    </button>
                 </div>
             </div>
 
             <div className='mt-8 flex flex-col items-start justify-start gap-5'>
-                <h1 className='text-2xl font-bold text-zinc-700'>Following <span className='text-ef4444'>{user?.followedTags.length}</span> tags</h1>
-                <p>Tags yet havent</p>
+                <h1 className='text-2xl font-bold text-zinc-700'>Following <span className='text-ef4444'>{user?.followedTags?.length || 0}</span> tags</h1>
+                <p>Tags yet haven't</p>
             </div>
 
             <div className='mt-10'>
@@ -89,7 +127,7 @@ const Profile = () => {
                         <i className="fa-solid fa-user-group text-xl mr-4 text-zinc-700"></i>
                         <div>
                             <p className='font-bold text-xl text-zinc-700'>Total Following</p>
-                            <span className='text-3xl font-semibold text-zinc-700 '>{user?.stats[1].totalFollowing}</span>
+                            <span className='text-3xl font-semibold text-zinc-700 '>{user?.stats[1]?.totalFollowing || 0}</span>
                         </div>
                     </div>
 
@@ -97,7 +135,7 @@ const Profile = () => {
                         <i className="fa-solid fa-user-group text-xl mr-4 text-zinc-700"></i>
                         <div>
                             <p className='font-bold text-xl text-zinc-700'>Total Followers</p>
-                            <span className='text-3xl font-semibold text-zinc-700 '>{user?.stats[0].totalFollowers}</span>
+                            <span className='text-3xl font-semibold text-zinc-700 '>{user?.stats[0]?.totalFollowers || 0}</span>
                         </div>
                     </div>
 
@@ -105,7 +143,7 @@ const Profile = () => {
                         <i className="fa-solid fa-user-group text-xl mr-4 text-zinc-700"></i>
                         <div>
                             <p className='font-bold text-xl text-zinc-700'>Total Posts</p>
-                            <span className='text-3xl font-semibold text-zinc-700 '>{user?.stats[2].totalPosts}</span>
+                            <span className='text-3xl font-semibold text-zinc-700 '>{user?.stats[2]?.totalPosts || 0}</span>
                         </div>
                     </div>
 
@@ -113,7 +151,7 @@ const Profile = () => {
                         <i className="fa-solid fa-user-group text-xl mr-4 text-zinc-700"></i>
                         <div>
                             <p className='font-bold text-xl text-zinc-700'>Total Questions</p>
-                            <span className='text-3xl font-semibold text-zinc-700 '>{user?.stats[3].totalQuestions}</span>
+                            <span className='text-3xl font-semibold text-zinc-700 '>{user?.stats[3]?.totalQuestions || 0}</span>
                         </div>
                     </div>
 
@@ -121,48 +159,17 @@ const Profile = () => {
                         <i className="fa-solid fa-user-group text-xl mr-4 text-zinc-700"></i>
                         <div>
                             <p className='font-bold text-xl text-zinc-700'>Total Answers</p>
-                            <span className='text-3xl font-semibold text-zinc-700 '>{user?.stats[4].totalAnswers}</span>
+                            <span className='text-3xl font-semibold text-zinc-700 '>{user?.stats[4]?.totalAnswers || 0}</span>
                         </div>
-                    </div>
-
-                    <div className='shadow flex items-center rounded-lg bg-white p-4'>
-                        <i className="fa-solid fa-user-group text-xl mr-4 text-zinc-700"></i>
-                        <div>
-                            <p className='font-bold text-xl text-zinc-700'>Total Comments</p>
-                            <span className='text-3xl font-semibold text-zinc-700 '>{user?.stats[5].totalComments}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className='mt-10 grid grid-cols-2 gap-4 md:grid-cols-3'>
-                <div className='shadow flex items-center rounded-lg p-4 bg-yellow-200'>
-                    <i className="fa-solid fa-trophy mr-4 text-yellow-500 text-3xl"></i>
-                    <div>
-                        <h4 className='font-bold capitalize text-yellow-700 text-xl'>Gold Badges</h4>
-                        <p className='text-3xl font-semibold'>{user?.badges[0].goldBadge}</p>
-                    </div>
-                </div>
-
-                <div className='shadow flex items-center rounded-lg p-4 bg-gray-200'>
-                    <i className="fa-solid fa-trophy mr-4 text-gray-500 text-3xl"></i>
-                    <div>
-                        <h4 className='font-bold capitalize text-gray-700 text-xl'>Silver Badges</h4>
-                        <p className='text-3xl font-semibold'>{user?.badges[1].silverBadge}</p>
-                    </div>
-                </div>
-
-                <div className='shadow flex items-center rounded-lg p-4 bg-orange-200'>
-                    <i className="fa-solid fa-trophy mr-4 text-orange-500 text-3xl"></i>
-                    <div>
-                        <h4 className='font-bold capitalize text-orange-700 text-xl'>Bronze Badges</h4>
-                        <p className='text-3xl font-semibold'>{user?.badges[2].bronzeBadge}</p>
                     </div>
                 </div>
             </div>
         </div>
-
     );
 };
-//logic tags
+
 export default Profile;
+
+
+
+
