@@ -5,6 +5,7 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import logo from '../../../images/isLogo.png';
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useSelector } from 'react-redux';
+import { current } from '@reduxjs/toolkit';
 
 const Profile = () => {
     const { userProfile } = useParams();
@@ -13,8 +14,8 @@ const Profile = () => {
     const [isFollowing, setIsFollowing] = useState(false);
     const storage = getStorage();
 
-    // Получаем данные текущего пользователя из Redux
     const currentUserEmail = useSelector(state => state.user.email);
+    const currentUser = useSelector(state => state.user);
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -24,7 +25,6 @@ const Profile = () => {
 
                 if (docSnap.exists()) {
                     setUser(docSnap.data());
-                    // Проверяем, подписан ли текущий пользователь
                     setIsFollowing(docSnap.data().followers.includes(currentUserEmail));
                 } else {
                     setUser({ fullName: "User not found", stats: [] });
@@ -65,23 +65,40 @@ const Profile = () => {
     const handleFollow = async () => {
         try {
             const userDocRef = doc(db, "users", userProfile);
-            if (isFollowing) {
-                await updateDoc(userDocRef, {
-                    followers: user.followers.filter(follower => follower !== currentUserEmail), // Logic for unfollow
-                    'stats.0.totalFollowers': (user.stats[0]?.totalFollowers || 0) - 1
-                });
-                setIsFollowing(false);
-            } else {
-                await updateDoc(userDocRef, {
-                    followers: [...user.followers, currentUserEmail],
-                    'stats.0.totalFollowers': (user.stats[0]?.totalFollowers || 0) + 1 // Logic for follow
-                });
-                setIsFollowing(true);
+            const docRef = doc(db, "users", currentUser.id);
+            const docSnap = await getDoc(docRef);
+
+            if (!docSnap.exists()) {
+                console.log('User not found');
+                return;
             }
+
+            const currUser = docSnap.data();
+            const { followers, stats: userStats } = user;
+            const { stats: currUserStats } = currUser;
+
+            const updatedFollowers = isFollowing
+                ? followers.filter(follower => follower !== currentUserEmail)
+                : [...followers, currentUserEmail];
+
+            const totalFollowersChange = isFollowing ? -1 : 1;
+            const totalFollowingChange = isFollowing ? -1 : 1;
+
+            await updateDoc(userDocRef, {
+                followers: updatedFollowers,
+                'stats.0.totalFollowers': (userStats[0]?.totalFollowers || 0) + totalFollowersChange,
+            });
+
+            await updateDoc(docRef, {
+                'stats.1.totalFollowing': (currUserStats[1]?.totalFollowing || 0) + totalFollowingChange,
+            });
+
+            setIsFollowing(!isFollowing);
         } catch (error) {
             console.error("Error updating follow status:", error);
         }
     };
+
 
     if (loading) {
         return <div>Loading...</div>;
