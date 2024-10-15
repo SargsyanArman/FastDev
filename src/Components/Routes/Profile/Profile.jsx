@@ -122,12 +122,14 @@ const Profile = () => {
                     <h1 className=' text-[25px] font-bold text-slate-800'>{user?.fullName}</h1>
                     <p className=' text-zinc-600 '>{user?.email}</p>
                     <div>{user?.createdAt && <p><i className="fa-solid fa-calendar text-zinc-600 "></i> Created {formatDate(user.createdAt)}</p>}</div>
-                    <button
-                        onClick={handleFollow}
-                        className={`mt-4 py-2 px-4 rounded ${isFollowing ? 'bg-gray-300' : 'bg-blue-500 hover:bg-blue-600'} text-white`}
-                    >
-                        {isFollowing ? 'Unfollow' : 'Follow'}
-                    </button>
+                    {userProfile !== currentUser.id && (
+                        <button
+                            onClick={handleFollow}
+                            className={`mt-4 py-2 px-4 rounded ${isFollowing ? 'bg-gray-300' : 'bg-blue-500 hover:bg-blue-600'} text-white`}
+                        >
+                            {isFollowing ? 'Unfollow' : 'Follow'}
+                        </button>
+                    )}
                 </div>
             </div>
 
