@@ -37,7 +37,7 @@ const Profile = () => {
         };
 
         fetchUserData();
-    }, [userProfile, currentUserEmail]);
+    }, [userProfile, currentUserEmail]); // add at the end user
 
     const handleFileUpload = async (e) => {
         const file = e.target.files[0];
@@ -85,7 +85,7 @@ const Profile = () => {
 
             const updatedFollowers = isFollowing
                 ? followers.filter(follower => follower !== currentUserEmail)
-                : [...followers, updatedUserData];
+                : [...followers, currentUserEmail];
 
             const totalFollowersChange = isFollowing ? -1 : 1;
             const totalFollowingChange = isFollowing ? -1 : 1;

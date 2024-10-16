@@ -10,12 +10,6 @@ const QuestionsItem = () => {
                 </a>
             </div>
 
-            <div className='mt-3.5'>
-                <a href="#" className='tag'>
-                    TEST
-                </a>
-            </div>
-
             <div className='mt-6 flex flex-wrap items-center justify-between gap-3'>
                 <a href='#' className="flex items-center justify-center gap-1">
                     <img src={logo_img} className='h-[18px]' />
