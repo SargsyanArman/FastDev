@@ -14,6 +14,7 @@ import CreateQuestion from "./Components/Routes/CreateQuestion/CreateQuestion";
 import AllQuestions from "./Components/Content/MainContent/Questions/AllQuestions";
 import Question from "./Components/Routes/Question/Question";
 import NotificationsPage from "./Components/Routes/Notifications/Notifications";
+import LoginRequiredPage from "./Components/Routes/LoginRequiredPage";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -41,6 +42,7 @@ const App = () => {
         },
         { path: 'signin', element: <SignIn /> },
         { path: 'signup', element: <SignUp /> },
+        { path: 'login-required', element: <LoginRequiredPage /> },
       ]
     },
   ]);

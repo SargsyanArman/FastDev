@@ -8,7 +8,6 @@ const getSidebarItemIcon = [
     <i className="fa-solid fa-file-contract"></i>,
     <i className="fa-solid fa-circle-question"></i>,
     <i className="fa-solid fa-user-group"></i>,
-    <i className="fa-solid fa-tags"></i>
 ];
 
 const getSidebarItemParagraph = [
@@ -16,7 +15,6 @@ const getSidebarItemParagraph = [
     "Posts",
     "Questions",
     "Community",
-    "Tags",
 ];
 
 const Content = () => {
