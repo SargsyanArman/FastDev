@@ -83,7 +83,7 @@ const UserHeaderPlagin = () => {
                                 <li className='p-3 hover:bg-zinc-300' onClick={() => navigate(`/profile/${user.id}`)}>
                                     <i className="fa-solid fa-user"></i> My Profile
                                 </li>
-                                <li className='p-3 hover:bg-zinc-300'><i class="fa-solid fa-bell"></i> Notifications </li>
+                                <li className='p-3 hover:bg-zinc-300' onClick={() => navigate('/notifications')}><i class="fa-solid fa-bell"></i> Notifications </li>
                                 <li className='p-3 hover:bg-zinc-300'>
                                     <button onClick={handleLogout} className="w-full text-left">
                                         <i class="fa-solid fa-arrow-right-from-bracket"></i> Log out

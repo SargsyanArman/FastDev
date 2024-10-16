@@ -13,6 +13,7 @@ import Followers from "./Components/Routes/Profile/Followers";
 import CreateQuestion from "./Components/Routes/CreateQuestion/CreateQuestion";
 import AllQuestions from "./Components/Content/MainContent/Questions/AllQuestions";
 import Question from "./Components/Routes/Question/Question";
+import NotificationsPage from "./Components/Routes/Notifications/Notifications";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -34,6 +35,8 @@ const App = () => {
             { path: 'create-question', element: <CreateQuestion /> },
             { path: 'all-questions', element: <AllQuestions /> },
             { path: 'question/:questionId', element: <Question /> },
+            { path: 'notifications', element: <NotificationsPage /> },
+
           ]
         },
         { path: 'signin', element: <SignIn /> },
