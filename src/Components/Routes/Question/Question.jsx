@@ -1,13 +1,18 @@
-import { collection, onSnapshot, updateDoc, doc } from 'firebase/firestore';
+import { collection, onSnapshot, updateDoc, doc, getDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { db } from '../../../firebase';
+import { useSelector } from 'react-redux';
+import author from '../../../images/author.png'
 
 const Question = () => {
     const { questionId } = useParams();
     const [questions, setQuestions] = useState([]);
     const [question, setQuestion] = useState(null);
     const [newAnswer, setNewAnswer] = useState('');
+    const user = useSelector((state) => state.user);
+    const [currentUserData, setCurrentUserData] = useState(null);
+    const navigate = useNavigate()
 
     useEffect(() => {
         const unsubscribe = onSnapshot(collection(db, 'questions'), (snapshot) => {
@@ -28,6 +33,45 @@ const Question = () => {
         }
     }, [questions, questionId]);
 
+    const fetchUser = async (userId) => {
+        const userDoc = await getDoc(doc(db, 'users', userId));
+        if (userDoc.exists()) {
+            return userDoc.data();
+        } else {
+            return null;
+        }
+    };
+
+    useEffect(() => {
+        const fetchCurrentUser = async () => {
+            if (user.id) {
+                const userData = await fetchUser(user.id);
+                setCurrentUserData(userData);
+            }
+        };
+
+        fetchCurrentUser();
+    }, [user.id]);
+
+    useEffect(() => {
+        const fetchUsersData = async () => {
+            const usersData = {};
+            for (const answer of (question?.answers || [])) {
+                if (!usersData[answer.userId]) {
+                    const userData = await fetchUser(answer.userId);
+                    if (userData) {
+                        usersData[answer.userId] = userData;
+                    }
+                }
+            }
+            setUsers(usersData);
+        };
+
+        if (question) {
+            fetchUsersData();
+        }
+    }, [question]);
+
     const formatDate = (timestamp) => {
         const date = timestamp.toDate();
         const options = { year: 'numeric', month: 'long' };
@@ -37,9 +81,22 @@ const Question = () => {
     const handleAddAnswer = async () => {
         if (newAnswer.trim() === '') return;
 
-        const updatedAnswers = [...(question.answers || []), newAnswer];
-        const questionRef = doc(db, 'questions', questionId);
+        const userId = user.id;
+        const userName = currentUserData?.fullName;
+        const userPhotoUrl = currentUserData?.photo || author;
 
+        const updatedAnswers = [
+            ...(question.answers || []),
+            {
+                text: newAnswer,
+                userId,
+                userName,
+                userPhotoUrl,
+                createdAt: new Date(),
+            },
+        ];
+
+        const questionRef = doc(db, 'questions', questionId);
         await updateDoc(questionRef, { answers: updatedAnswers });
 
         setNewAnswer('');
@@ -64,7 +121,21 @@ const Question = () => {
                 <h2 className='text-xl font-semibold'>Answers:</h2>
                 <ul className='list-disc pl-5'>
                     {question.answers && question.answers.map((answer, index) => (
-                        <li key={index}>{answer}</li>
+                        <li key={index} className='flex items-start gap-2 mb-4'>
+                            <img
+                                src={answer.userPhotoUrl}
+                                alt={answer.userName}
+                                className='w-8 h-8 rounded-full cursor-pointer'
+                                onClick={() => navigate(`/profile/${answer.userId}`)}
+                            />
+                            <div>
+                                <Link to={`/profile/${answer.userId}`} className='font-semibold text-blue-600'>
+                                    {answer.userName}
+                                </Link>
+                                <p className='mt-1'>{answer.text}</p>
+                                <p className='mt-1 text-gray-500 text-sm'>Answered on: {formatDate(answer.createdAt)}</p>
+                            </div>
+                        </li>
                     ))}
                 </ul>
             </div>

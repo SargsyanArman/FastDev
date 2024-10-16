@@ -25,12 +25,10 @@ const Questions = () => {
 
     return (
         <div className='mt-20 flex w-full flex-col gap-6'>
-            <div>
-                <button onClick={() => navigate('all-questions')} className='flex justify-end gap-3 text-sm font-bold text-red-500 hover:text-red-400'>
-                    VIEW ALL QUESTIONS
-                    <span> <i className="fa-solid fa-arrow-right-long sidebar-right-btnRight"> </i></span>
-                </button>
-            </div>
+            <button onClick={() => navigate('all-questions')} className='flex justify-end gap-3 text-sm font-bold text-red-500 hover:text-red-400'>
+                VIEW ALL QUESTIONS
+                <span> <i className="fa-solid fa-arrow-right-long sidebar-right-btnRight"> </i></span>
+            </button>
             <div className='mt-6 flex flex-col gap-6'>
                 {limitedQuestions.map(question => (
                     <QuestionsItem key={question.id} question={question} />
