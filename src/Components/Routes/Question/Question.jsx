@@ -64,7 +64,6 @@ const Question = () => {
                     }
                 }
             }
-            setUsers(usersData);
         };
 
         if (question) {

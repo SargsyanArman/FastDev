@@ -12,9 +12,23 @@ const Profile = () => {
     const [loading, setLoading] = useState(true);
     const [isFollowing, setIsFollowing] = useState(false);
     const storage = getStorage();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const currentUserEmail = useSelector(state => state.user.email);
     const currentUser = useSelector(state => state.user);
+
+    const statsData = [
+        { label: 'Total Following', value: user?.stats[1]?.totalFollowing || 0, icon: 'fa-user-plus' },
+        { label: 'Total Followers', value: user?.stats[0]?.totalFollowers || 0, icon: 'fa-users' },
+        { label: 'Total Posts', value: user?.stats[2]?.totalPosts || 0, icon: 'fa-file-alt' },
+        { label: 'Total Questions', value: user?.stats[3]?.totalQuestions || 0, icon: 'fa-question' },
+        { label: 'Total Answers', value: user?.stats[4]?.totalAnswers || 0, icon: 'fa-comments' },
+    ];
+
+    const badgesData = [
+        { label: 'Gold Badges', value: user?.badges[0]?.goldBadge, color: 'bg-yellow-200', iconColor: 'text-yellow-500' },
+        { label: 'Silver Badges', value: user?.badges[1]?.silverBadge, color: 'bg-gray-200', iconColor: 'text-gray-500' },
+        { label: 'Bronze Badges', value: user?.badges[2]?.bronzeBadge, color: 'bg-orange-200', iconColor: 'text-orange-500' },
+    ];
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -37,7 +51,7 @@ const Profile = () => {
         };
 
         fetchUserData();
-    }, [userProfile, currentUserEmail]); // add at the end user
+    }, [userProfile, currentUserEmail]);
 
     const handleFileUpload = async (e) => {
         const file = e.target.files[0];
@@ -76,13 +90,6 @@ const Profile = () => {
             const { followers, stats: userStats } = user;
             const { stats: currUserStats } = currUser;
 
-            const updatedUserData = {
-                id: currentUser.id,
-                fullName: currUser.fullName,
-                photo: currUser.photo,
-                email: currUser.email
-            };
-
             const updatedFollowers = isFollowing
                 ? followers.filter(follower => follower !== currentUserEmail)
                 : [...followers, currentUserEmail];
@@ -105,15 +112,14 @@ const Profile = () => {
         }
     };
 
-
     if (loading) {
         return <div>Loading...</div>;
     }
 
     return (
         <div className='flex flex-col gap-6 w-[953px] my-7 mx-5 overflow-y-auto max-h-[100vh-122px] scroll-main'>
-            <div className='flex flex-col-reverse items-start sm:flex-row'>
-                <div className='mt-3 flex flex-col items-start gap-4 lg:flex-row'>
+            <div className='flex flex-col m-auto items-start sm:m-0 sm:flex-row'>
+                <div className='mt-3 ml-5 flex flex-col items-start gap-4 lg:flex-row'>
                     <div className='relative h-[140px] w-[140px] rounded-full'>
                         <img src={user?.photo || logo} alt="user logo" className='rounded-[100%] w-[8.5rem] h-[8.5rem]' />
                         <label htmlFor="file-upload" className="absolute bottom-0 right-0 cursor-pointer rounded-full bg-white p-1 hover:bg-gray-200">
@@ -125,14 +131,14 @@ const Profile = () => {
                         </label>
                     </div>
                 </div>
-                <div className='mt-6 ml-6'>
-                    <h1 className=' text-[25px] font-bold text-slate-800'>{user?.fullName}</h1>
+                <div className='mt-6 sm:ml-6'>
+                    <h1 className='text-xl sm:text-[25px] font-bold text-slate-800'>{user?.fullName}</h1>
                     <p className=' text-zinc-600 '>{user?.email}</p>
                     <div>{user?.createdAt && <p><i className="fa-solid fa-calendar text-zinc-600 "></i> Created {formatDate(user.createdAt)}</p>}</div>
                     {userProfile !== currentUser.id && (
                         <button
                             onClick={handleFollow}
-                            className={`mt-4 py-2 px-4 rounded ${isFollowing ? 'bg-gray-300' : 'bg-blue-500 hover:bg-blue-600'} text-white`}
+                            className={`mt-4 ml-10 py-2 px-4 rounded sm:ml-0 ${isFollowing ? 'bg-gray-300' : 'bg-blue-500 hover:bg-blue-600'} text-white`}
                         >
                             {isFollowing ? 'Unfollow' : 'Follow'}
                         </button>
@@ -141,58 +147,36 @@ const Profile = () => {
             </div>
 
             <div className='mt-10'>
-                <h3 className='text-2xl font-bold text-zinc-700'>Stats</h3>
-                <div className='grid grid-cols-2 gap-4 md:grid-cols-3 mt-10'>
-                    <div className='shadow flex items-center rounded-lg bg-white p-4'>
-                        <i className="fa-solid fa-user-group text-xl mr-4 text-zinc-700"></i>
-                        <div>
-                            <p className='font-bold text-xl text-zinc-700'>Total Following</p>
-                            <span className='text-3xl font-semibold text-zinc-700 '>{user?.stats[1]?.totalFollowing || 0}</span>
+                <h3 className='text-xl sm:text-2xl font-bold text-zinc-700'>Stats</h3>
+                <div className='grid grid-cols-1 mx-1 sm:grid-cols-2 gap-4 md:grid-cols-3 mt-10'>
+                    {statsData.map(stat => (
+                        <div key={stat.label} className='shadow flex items-center rounded-lg bg-white p-4'>
+                            <i className={`fa-solid ${stat.icon} text-xl mr-4 text-zinc-700`}></i>
+                            <div>
+                                <p className='text-[16px] font-bold sm:text-xl text-zinc-700'>{stat.label}</p>
+                                <span className='text-xl font-semibold sm:text-3xl text-zinc-700'>{stat.value}</span>
+                            </div>
                         </div>
-                    </div>
-
-                    <div className='shadow flex items-center rounded-lg bg-white p-4'>
-                        <i className="fa-solid fa-user-group text-xl mr-4 text-zinc-700"></i>
-                        <div>
-                            <button className='flex items-center gap-5 hover:text-zinc-500 cursor-pointer' onClick={() => navigate(`/profile/${userProfile}/followers`)}>
-                                <p className='font-bold text-xl text-zinc-700 hover:text-zinc-500'>Total Followers</p>
-                                <i className="fa-solid fa-arrow-right-long sidebar-right-btnRight hover:text-zinc-500"></i>
-                            </button>
-                            <span className='text-3xl font-semibold text-zinc-700 '>{user?.stats[0]?.totalFollowers || 0}</span>
-                        </div>
-                    </div>
-
-                    <div className='shadow flex items-center rounded-lg bg-white p-4'>
-                        <i className="fa-solid fa-user-group text-xl mr-4 text-zinc-700"></i>
-                        <div>
-                            <p className='font-bold text-xl text-zinc-700'>Total Posts</p>
-                            <span className='text-3xl font-semibold text-zinc-700 '>{user?.stats[2]?.totalPosts || 0}</span>
-                        </div>
-                    </div>
-
-                    <div className='shadow flex items-center rounded-lg bg-white p-4'>
-                        <i className="fa-solid fa-user-group text-xl mr-4 text-zinc-700"></i>
-                        <div>
-                            <p className='font-bold text-xl text-zinc-700'>Total Questions</p>
-                            <span className='text-3xl font-semibold text-zinc-700 '>{user?.stats[3]?.totalQuestions || 0}</span>
-                        </div>
-                    </div>
-
-                    <div className='shadow flex items-center rounded-lg bg-white p-4'>
-                        <i className="fa-solid fa-user-group text-xl mr-4 text-zinc-700"></i>
-                        <div>
-                            <p className='font-bold text-xl text-zinc-700'>Total Answers</p>
-                            <span className='text-3xl font-semibold text-zinc-700 '>{user?.stats[4]?.totalAnswers || 0}</span>
-                        </div>
-                    </div>
+                    ))}
                 </div>
+            </div>
+
+            <h3 className='mt-5 text-xl sm:text-2xl font-bold text-zinc-700'>Badges</h3>
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
+                {badgesData.map(badge => (
+                    <div key={badge.label} className={`flex items-center p-4 rounded-lg ${badge.color}`}>
+                        <div className={`flex items-center justify-center h-10 w-10 rounded-full ${badge.iconColor}`}>
+                            <i className={`fa-solid ${badge.label === 'Gold Badges' ? 'fa-star' : badge.label === 'Silver Badges' ? 'fa-star-half-alt' : 'fa-star'} text-xl`}></i>
+                        </div>
+                        <div className='ml-3'>
+                            <p className='text-xl sm:text-2xl font-bold'>{badge.label}</p>
+                            <span className='text-xl font-bold sm:text-2xl'>{badge.value || 0}</span>
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
     );
 };
 
 export default Profile;
-
-
-
-
