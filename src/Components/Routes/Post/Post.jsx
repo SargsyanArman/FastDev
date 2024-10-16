@@ -8,6 +8,12 @@ const Post = () => {
     const [posts, setPosts] = useState([]);
     const [post, setPost] = useState(null);
 
+    const formatDate = (timestamp) => {
+        const date = timestamp.toDate();
+        const options = { year: 'numeric', month: 'long' };
+        return date.toLocaleDateString(undefined, options);
+    };
+
     useEffect(() => {
         const unsubscribe = onSnapshot(collection(db, 'posts'), (snapshot) => {
             const fetchedPosts = snapshot.docs.map((doc) => ({
@@ -40,7 +46,7 @@ const Post = () => {
                 className='w-full h-[300px] lg:h-[500px] rounded-2xl mt-5'
             />
             <p className='mt-5'>{post.description}</p>
-            <p className='mt-3 text-gray-500'>Posted on: {new Date(post.createdAt).toLocaleDateString()}</p>
+            <p className='mt-3 text-gray-500'>Posted on: {formatDate(post.createdAt)}</p>
         </div>
     );
 };

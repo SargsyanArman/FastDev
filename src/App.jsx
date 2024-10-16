@@ -11,6 +11,8 @@ import AllPosts from "./Components/Content/MainContent/BodyMainContent/Posts/All
 import Post from "./Components/Routes/Post/Post";
 import Followers from "./Components/Routes/Profile/Followers";
 import CreateQuestion from "./Components/Routes/CreateQuestion/CreateQuestion";
+import AllQuestions from "./Components/Content/MainContent/Questions/AllQuestions";
+import Question from "./Components/Routes/Question/Question";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -30,6 +32,8 @@ const App = () => {
             { path: 'posts/:post', element: <Post /> },
             { path: 'profile/:userProfile/followers', element: <Followers /> },
             { path: 'create-question', element: <CreateQuestion /> },
+            { path: 'all-questions', element: <AllQuestions /> },
+            { path: 'question/:questionId', element: <Question /> },
           ]
         },
         { path: 'signin', element: <SignIn /> },

@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { collection, onSnapshot } from 'firebase/firestore';
-import { db } from '../../../../../firebase';
-import PostItem from './PostItem';
+import { db } from '../../../../firebase';
+import QuestionsItem from './QuestionsItem';
 
-const AllPosts = () => {
-    const [posts, setPosts] = useState([]);
+const AllQuestions = () => {
+    const [questions, setQuestions] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const postsPerPage = 6;
+    const questionsPerPage = 10;
 
     useEffect(() => {
-        const unsubscribe = onSnapshot(collection(db, 'posts'), (snapshot) => {
-            const fetchedPosts = snapshot.docs.map((doc) => ({
+        const unsubscribe = onSnapshot(collection(db, 'questions'), (snapshot) => {
+            const fetchedQuestions = snapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data(),
             }));
-            setPosts(fetchedPosts);
+            setQuestions(fetchedQuestions);
         });
 
         return () => unsubscribe();
     }, []);
 
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+    const indexOfLastQuestions = currentPage * questionsPerPage;
+    const indexOfFirstQuestions = indexOfLastQuestions - questionsPerPage;
+    const currentQuestions = questions.slice(indexOfFirstQuestions, indexOfLastQuestions);
 
-    const totalPages = Math.ceil(posts.length / postsPerPage);
+    const totalPages = Math.ceil(questions.length / questionsPerPage);
 
     const nextPage = () => {
         if (currentPage < totalPages) {
@@ -41,12 +41,12 @@ const AllPosts = () => {
     return (
         <div className="flex flex-col items-center my-7 mx-5">
             <div className="flex flex-wrap gap-6 max-w-[953px] overflow-y-auto max-h-[calc(100vh-122px)] scroll-main justify-center">
-                {currentPosts.map(post => (
-                    <PostItem key={post.id} post={post} />
+                {currentQuestions.map(question => (
+                    <QuestionsItem key={question.id} question={question} />
                 ))}
             </div>
 
-            <div className="flex justify-between w-full mt-6">
+            <div className="flex justify-center mt-4">
                 <button
                     onClick={prevPage}
                     disabled={currentPage === 1}
@@ -67,4 +67,4 @@ const AllPosts = () => {
     );
 };
 
-export default AllPosts;
+export default AllQuestions;
