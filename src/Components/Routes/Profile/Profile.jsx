@@ -12,7 +12,6 @@ const Profile = () => {
     const [loading, setLoading] = useState(true);
     const [isFollowing, setIsFollowing] = useState(false);
     const storage = getStorage();
-    const navigate = useNavigate();
     const currentUserEmail = useSelector(state => state.user.email);
     const currentUser = useSelector(state => state.user);
 
