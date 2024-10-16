@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { db } from '../../../firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import logo from '../../../images/isLogo.png';
@@ -12,7 +12,7 @@ const Profile = () => {
     const [loading, setLoading] = useState(true);
     const [isFollowing, setIsFollowing] = useState(false);
     const storage = getStorage();
-
+    const navigate = useNavigate()
     const currentUserEmail = useSelector(state => state.user.email);
     const currentUser = useSelector(state => state.user);
 
@@ -37,7 +37,7 @@ const Profile = () => {
         };
 
         fetchUserData();
-    }, [userProfile, currentUserEmail, user]);
+    }, [userProfile, currentUserEmail]);
 
     const handleFileUpload = async (e) => {
         const file = e.target.files[0];
@@ -76,9 +76,16 @@ const Profile = () => {
             const { followers, stats: userStats } = user;
             const { stats: currUserStats } = currUser;
 
+            const updatedUserData = {
+                id: currentUser.id,
+                fullName: currUser.fullName,
+                photo: currUser.photo,
+                email: currUser.email
+            };
+
             const updatedFollowers = isFollowing
                 ? followers.filter(follower => follower !== currentUserEmail)
-                : [...followers, currentUserEmail];
+                : [...followers, updatedUserData];
 
             const totalFollowersChange = isFollowing ? -1 : 1;
             const totalFollowingChange = isFollowing ? -1 : 1;
@@ -152,7 +159,10 @@ const Profile = () => {
                     <div className='shadow flex items-center rounded-lg bg-white p-4'>
                         <i className="fa-solid fa-user-group text-xl mr-4 text-zinc-700"></i>
                         <div>
-                            <p className='font-bold text-xl text-zinc-700'>Total Followers</p>
+                            <button className='flex items-center gap-5 hover:text-zinc-500 cursor-pointer' onClick={() => navigate(`/profile/${userProfile}/followers`)}>
+                                <p className='font-bold text-xl text-zinc-700 hover:text-zinc-500'>Total Followers</p>
+                                <i className="fa-solid fa-arrow-right-long sidebar-right-btnRight hover:text-zinc-500"></i>
+                            </button>
                             <span className='text-3xl font-semibold text-zinc-700 '>{user?.stats[0]?.totalFollowers || 0}</span>
                         </div>
                     </div>

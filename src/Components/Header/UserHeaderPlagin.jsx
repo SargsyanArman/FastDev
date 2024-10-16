@@ -54,7 +54,7 @@ const UserHeaderPlagin = () => {
 
             fetchUserData();
         }
-    }, [user.id, userData]);
+    }, [user.id]);
 
 
     return (
