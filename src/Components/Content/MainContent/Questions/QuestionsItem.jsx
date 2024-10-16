@@ -11,11 +11,13 @@ const QuestionsItem = ({ question }) => {
 
     return (
         <div className='bg-zinc-100 rounded-[10px] p-9 w-full sm:max-w-[640px] md:max-w-[760px] lg:max-w-[890px]'>
-            <div>
-                <button className='text-[20px] hover:text-red-500 font-bold '>
-                    {question?.title}
-                </button>
-            </div>
+            <Link to={`/question/${question.id}`}>
+                <div>
+                    <button className='text-[20px] hover:text-red-500 font-bold '>
+                        {question?.title}
+                    </button>
+                </div>
+            </Link>
 
             <div className='mt-6 flex flex-wrap items-center justify-between gap-3'>
                 <Link to={`/question/${question.id}`}>

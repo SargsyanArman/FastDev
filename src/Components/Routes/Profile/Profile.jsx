@@ -140,11 +140,6 @@ const Profile = () => {
                 </div>
             </div>
 
-            <div className='mt-8 flex flex-col items-start justify-start gap-5'>
-                <h1 className='text-2xl font-bold text-zinc-700'>Following <span className='text-ef4444'>{user?.followedTags?.length || 0}</span> tags</h1>
-                <p>Tags yet haven't</p>
-            </div>
-
             <div className='mt-10'>
                 <h3 className='text-2xl font-bold text-zinc-700'>Stats</h3>
                 <div className='grid grid-cols-2 gap-4 md:grid-cols-3 mt-10'>

@@ -21,13 +21,6 @@ const AuthorsItem = ({ user }) => {
         <h3 className='text-[20px] font-bold cursor-pointer hover:text-[#898888]' onClick={handleAuthorClick}>{user.fullName || 'Unknown Author'}</h3>
         <p className="mt-2 text-zinc-500 text-[14px] cursor-pointer hover:text-[#272727]" onClick={handleAuthorClick}>@{user.email || 'unknown'}</p>
       </div>
-      {user?.tag ? (
-        <p className='tag mt-5'>
-          {user.tag}
-        </p>
-      ) : (
-        <p className='font-bold text-xs mt-5'>No Tags yet</p>
-      )}
     </div>
   );
 };

@@ -37,7 +37,7 @@ const AllAuthors = () => {
     };
 
     return (
-        <div className='flex flex-col bg-[#F9F8F8] w-[953px] mt-6 h-[605px] overflow-y-auto max-h-[calc(100vh-122px)]'>
+        <div className='flex flex-col bg-[#F9F8F8] w-[953px] mt-6 h-[605px] overflow-y-auto max-h-[calc(100vh-122px)] sidebar-right'>
             <h2 className='text-2xl font-bold mb-6'>All Authors</h2>
             <input
                 type="text"

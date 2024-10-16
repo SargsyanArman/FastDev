@@ -31,7 +31,6 @@ const SignUp = () => {
                 createdAt: new Date(),
                 post: [],
                 question: [],
-                followedTags: [],
                 followers: [],
                 following: [],
                 badges: [
