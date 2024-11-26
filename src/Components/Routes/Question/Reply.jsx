@@ -3,6 +3,12 @@ import React, { useState } from 'react';
 const Reply = ({ answer, handleAddReply, currentUserData, userId }) => {
     const [replying, setReplying] = useState(false);
     const [replyText, setReplyText] = useState('');
+    const handleReplyClick = () => {
+      
+        const initialReplyText = `@${answer.userName} `;
+        setReplyText(initialReplyText);
+        setReplying(true);
+    };
 
     
     const formatDate = (timestamp) => {
@@ -46,7 +52,7 @@ const Reply = ({ answer, handleAddReply, currentUserData, userId }) => {
             </div>
 
             <button
-                onClick={() => setReplying(!replying)}
+               onClick={handleReplyClick}
                 className="text-blue-500 text-sm self-start mt-1 ml-10"
             >
                 Reply
