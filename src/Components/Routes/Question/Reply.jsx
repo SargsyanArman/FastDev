@@ -1,26 +1,29 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import LoginRequiredPage from '../LoginRequiredPage';
 
 const Reply = ({ answer, handleAddReply, currentUserData, userId }) => {
     const [replying, setReplying] = useState(false);
     const [replyText, setReplyText] = useState('');
+    const [showLoginPage, setShowLoginPage] = useState(false);
+
+    const user = useSelector((state) => state.user); 
+
     const handleReplyClick = () => {
-      
         const initialReplyText = `@${answer.userName} `;
         setReplyText(initialReplyText);
         setReplying(true);
+        setShowLoginPage(false);
     };
 
-    
     const formatDate = (timestamp) => {
         if (!timestamp) return 'No date available';
-    
+
         if (timestamp.toDate) {
-          
             const date = timestamp.toDate();
             const options = { year: 'numeric', month: 'long' };
             return date.toLocaleDateString(undefined, options);
         } else if (timestamp instanceof Date) {
-           
             const options = { year: 'numeric', month: 'long' };
             return timestamp.toLocaleDateString(undefined, options);
         } else {
@@ -29,6 +32,11 @@ const Reply = ({ answer, handleAddReply, currentUserData, userId }) => {
     };
 
     const handleReplySubmit = () => {
+        if (!user.token) {
+            setShowLoginPage(true); 
+            return;
+        }
+
         if (replyText.trim()) {
             handleAddReply(answer.userId, replyText);
             setReplyText('');
@@ -52,7 +60,7 @@ const Reply = ({ answer, handleAddReply, currentUserData, userId }) => {
             </div>
 
             <button
-               onClick={handleReplyClick}
+                onClick={handleReplyClick}
                 className="text-blue-500 text-sm self-start mt-1 ml-10"
             >
                 Reply
@@ -75,6 +83,8 @@ const Reply = ({ answer, handleAddReply, currentUserData, userId }) => {
                     </button>
                 </div>
             )}
+
+            {showLoginPage && <LoginRequiredPage />} 
 
             {answer.replies && answer.replies.length > 0 && (
                 <ul className="pl-8 mt-3">
