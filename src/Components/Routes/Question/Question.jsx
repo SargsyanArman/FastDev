@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid'
 import { useSelector } from 'react-redux';
 import { collection, onSnapshot, updateDoc, doc, getDoc } from 'firebase/firestore';
 import { db } from '../../../firebase';
@@ -11,6 +12,7 @@ const Question = () => {
     const [questions, setQuestions] = useState([]);
     const [question, setQuestion] = useState(null);
     const [newAnswer, setNewAnswer] = useState('');
+    
     const [currentUserData, setCurrentUserData] = useState(null);
     const user = useSelector((state) => state.user);
     const navigate = useNavigate();
@@ -87,6 +89,7 @@ const Question = () => {
         const userId = user.id;
         const userName = currentUserData?.fullName;
         const userPhotoUrl = currentUserData?.photo || author;
+        
 
         const updatedAnswers = question.answers.map((answer) => {
             if (answer.userId === answerId) {
@@ -107,6 +110,7 @@ const Question = () => {
             return answer;
         });
 
+       
         const questionRef = doc(db, 'questions', questionId);
         await updateDoc(questionRef, { answers: updatedAnswers });
 
@@ -117,6 +121,27 @@ const Question = () => {
     if (!question) {
         return <div>Question not found</div>;
     }
+
+    const handleDeleteReply = async (answerId, replyIndex) => {
+        const updatedAnswers = question.answers.map((answer) => {
+            if (answer.userId === answerId) {
+                const updatedReplies = answer.replies.filter((_, index) => index !== replyIndex);
+                return {
+                    ...answer,
+                    replies: updatedReplies,
+                };
+            }
+            return answer;
+        });
+    
+        const questionRef = doc(db, 'questions', questionId);
+        await updateDoc(questionRef, { answers: updatedAnswers });
+    
+        const updatedQuestion = { ...question, answers: updatedAnswers };
+        setQuestion(updatedQuestion);
+    };
+    
+
 
     return (
         <div className="flex flex-col gap-6 w-[953px] my-7 mx-5 overflow-y-auto max-h-[100vh-122px] scroll-main">
@@ -140,6 +165,7 @@ const Question = () => {
                                 handleAddReply={handleAddReply}
                                 currentUserData={currentUserData}
                                 userId={user.id}
+                                handleDeleteReply= { handleDeleteReply}
                             />
                         ))}
                 </ul>

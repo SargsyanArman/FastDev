@@ -4,7 +4,7 @@ import LoginRequiredPage from '../LoginRequiredPage';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'; 
 
-const Reply = ({ answer, handleAddReply }) => {
+const Reply = ({ answer, handleAddReply, handleDeleteReply }) => {
     const [replying, setReplying] = useState(false);
     const [replyText, setReplyText] = useState('');
     const [showLoginPage, setShowLoginPage] = useState(false);
@@ -46,6 +46,7 @@ const Reply = ({ answer, handleAddReply }) => {
             return 'Invalid date';
         }
     };
+    
 
     const renderReplyText = (text) => {
       
@@ -144,6 +145,12 @@ const Reply = ({ answer, handleAddReply }) => {
                                     {renderReplyText(reply.text)}
                                 </p>
                                 <p className="text-gray-500 text-sm">{formatDate(reply.createdAt)}</p>
+                                <button
+                onClick={() => handleDeleteReply(answer.userId, i)}
+                className="text-red-500 text-sm mt-1 ml-2"
+            >
+                <i className="fa-solid fa-trash"></i>,
+            </button>
                             </div>
                         </li>
                     ))}
