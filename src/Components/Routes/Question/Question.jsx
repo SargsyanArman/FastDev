@@ -151,7 +151,7 @@ const Question = () => {
                 alt={question.title}
                 className="w-full h-[300px] lg:h-[500px] rounded-2xl mt-5"
             />
-            <p className="mt-5">{question.description}</p>
+            <p className="mt-5 whitespace-pre-line">{question.description}</p>
             <p className="mt-3 text-gray-500">Asked on: {formatDate(question.createdAt)}</p>
 
             <div className="mt-5">

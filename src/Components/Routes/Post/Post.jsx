@@ -45,7 +45,7 @@ const Post = () => {
                 alt={post.title}
                 className='w-full h-[300px] lg:h-[500px] rounded-2xl mt-5'
             />
-            <p className='mt-5'>{post.description}</p>
+            <p className='mt-5 whitespace-pre-line'>{post.description}</p>
             <p className='mt-3 text-gray-500'>Posted on: {formatDate(post.createdAt)}</p>
         </div>
     );
