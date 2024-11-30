@@ -83,7 +83,7 @@ const Reply = ({ answer, handleAddReply, handleDeleteReply }) => {
                     >
                         @{answer.userName}
                     </Link>
-                    <p className="mt-1">{answer.text}</p>
+                    <p className="mt-1 whitespace-pre-line">{answer.text}</p>
                     <p className="mt-1 text-gray-500 text-sm">Answered on: {formatDate(answer.createdAt)}</p>
                 </div>
             </div>
