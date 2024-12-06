@@ -212,7 +212,6 @@ const Question = () => {
     const [newAnswer, setNewAnswer] = useState('');
     const [currentUserData, setCurrentUserData] = useState(null);
     const [isLoading, setIsLoading] = useState(true); 
-
     const user = useSelector((state) => state.user);
 
     useEffect(() => {
