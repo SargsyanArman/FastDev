@@ -322,10 +322,10 @@ const Question = () => {
     };
     
     const handleDeleteReply = async (answerText, replyCreatedAt, replyUserId) => {
-        if (replyUserId !== user.id) {
-            alert('You can only delete your own replies.');
-            return;
-        }
+        // if (replyUserId !== user.id) {
+        //     alert('You can only delete your own replies.');
+        //     return;
+        // }
     
         const updatedAnswers = question.answers.map((answer) => {
             if (answer.text === answerText) {

@@ -200,9 +200,11 @@ const Reply = ({ answer, handleAddReply, handleDeleteReply }) => {
     };
 
     const renderReplyText = (text) => {
-        const regex = /(@[a-zA-Z0-9_]+)/g;
-        const parts = text.split(regex);
+       
 
+        const regex = /(@[a-zA-Z0-9_]+\s?[a-zA-Z0-9_]+)/g; 
+             const parts = text.split(regex);
+            
         return parts.map((part, index) => {
             if (regex.test(part)) {
                 return (
@@ -292,6 +294,9 @@ const Reply = ({ answer, handleAddReply, handleDeleteReply }) => {
         handleDeleteReply(answer.text, reply.createdAt, reply.userId)
     }
     className="text-red-500 text-sm mt-1"
+    style={{
+        display: reply.userId === user.id ? "inline" : "none",
+    }}
 >
     Delete Reply
 </button>
