@@ -82,7 +82,7 @@ const Reply = ({ answer, handleAddReply, handleDeleteReply }) => {
                 onClick={handleReplyClick}
                 className="text-blue-500 text-sm self-start mt-1 ml-10"
             >
-                Reply
+               <i className="fa-solid fa-reply" />
             </button>
 
             {replying && (
@@ -134,7 +134,7 @@ const Reply = ({ answer, handleAddReply, handleDeleteReply }) => {
         display: reply.userId === user.id ? "inline" : "none",
     }}
 >
-    Delete Reply
+< i className="fa-solid fa-trash" />
 </button>
                             </div>
                         </li>

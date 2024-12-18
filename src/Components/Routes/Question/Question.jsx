@@ -215,23 +215,7 @@ const Question = () => {
                 <p className="mt-3 text-gray-500">Asked on: {formatDate(question.createdAt)}</p>
             )}
 
-            {/* <div className="mt-5">
-                <h2 className="text-xl font-semibold">Answers:</h2>
-                <ul className="list-disc pl-5">
-                    {question?.answers?.length > 0 ? (
-                        question.answers.map((answer, index) => (
-                            <Reply
-    key={index}
-    answer={answer}
-    handleAddReply={handleAddReply}
-    handleDeleteReply={handleDeleteReply}
-/>
-                        ))
-                    ) : (
-                        <p>No answers yet. Be the first to answer!</p>
-                    )}
-                </ul>
-            </div> */}
+          
 
 <div className="mt-5">
     <h2 className="text-xl font-semibold">Answers:</h2>
@@ -239,14 +223,14 @@ const Question = () => {
         {question?.answers?.length > 0 ? (
             question.answers.map((answer, index) => (
                 <div key={index} className="mb-4 flex flex-col gap-2">
-                    <div className="flex justify-between items-center">
+                    <div className="flex gap-2 items-center">
                         <p className="font-medium">{answer.text}</p>
                         {answer.userId === user?.id && (
                             <button
                                 onClick={() => handleDeleteAnswer(answer.text, answer.createdAt, answer.userId)}
                                 className="text-red-500 text-sm"
                             >
-                                Delete
+                              < i className="fa-solid fa-trash" />
                             </button>
                         )}
                     </div>
@@ -262,6 +246,10 @@ const Question = () => {
         )}
     </ul>
 </div>
+
+
+
+
 
             <div className="mt-5">
                 <h2 className="text-lg font-semibold">Add your answer:</h2>
