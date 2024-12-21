@@ -8,10 +8,10 @@ const NotificationsPage = () => {
     return (
         <>
             {user.token ? (
-                <div className="flex items-center justify-center h-full bg-gray-100 w-[953px]">
-                    <div className="text-center">
-                        <h1 className="text-3xl font-bold text-gray-800 mb-4">Notifications</h1>
-                        <p className="text-lg text-gray-600 mb-6">You have no notifications yet</p>
+                <div className="flex items-center justify-center h-full bg-gray-100 w-[953px]  dark:bg-gray-700 dark:text-white">
+                    <div className="text-center  dark:text-white ">
+                        <h1 className="text-3xl font-bold text-gray-800 mb-4  dark:text-white">Notifications</h1>
+                        <p className="text-lg text-gray-600 mb-6  dark:text-white">You have no notifications yet</p>
                         <div className="w-48 h-48 mx-auto bg-gray-200 rounded-full flex items-center justify-center">
                             <svg
                                 className="w-24 h-24 text-gray-400"

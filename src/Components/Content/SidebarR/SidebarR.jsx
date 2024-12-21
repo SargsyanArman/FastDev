@@ -11,8 +11,8 @@ const icons = [
 
 const SidebarR = () => {
   return (
-    <div className='hidden xl:block w-[319px] mt-14 overflow-y-auto sidebar-right'>
-      <h2 className='text-[20px] font-bold text-zinc-900'>Top Posts</h2>
+    <div className='hidden xl:block w-[319px] mt-14 overflow-y-auto sidebar-right '>
+      <h2 className='text-[20px] font-bold text-zinc-900 '>Top Posts</h2>
       <SidebarPostItem icons={icons} />
       <TopQuestions />
     </div>

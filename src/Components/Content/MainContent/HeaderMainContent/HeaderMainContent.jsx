@@ -5,8 +5,8 @@ import HeaderButtons from './HeaderButtons/HeaderButtons'
 
 const HeaderMainContent = () => {
   return (
-    <div className='flex flex-col max-w-[903px] h-[166px]'>
-      <div className='flex flex-col-reverse sm:flex-row justify-between items-start mx-0 sm:mx-[10px]'>
+    <div className='flex flex-col max-w-[903px] h-[166px] '>
+      <div className='flex flex-col-reverse sm:flex-row justify-between items-start mx-0 sm:mx-[10px] '>
         <HeaderInfo />
         <HeaderButtons />
       </div>

@@ -85,9 +85,9 @@ const CreateQuestion = () => {
 
     return (
         <div className="flex flex-col items-center gap-6 my-7 mx-5 overflow-y-auto w-[953px] max-h-[100vh-122px] scroll-main">
-            <form onSubmit={handleSubmit} className="editor w-full max-w-2xl flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg bg-white rounded-lg">
+            <form onSubmit={handleSubmit} className="editor w-full max-w-2xl flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg bg-white  dark:bg-gray-700 dark:text-white  rounded-lg">
                 <input
-                    className="title bg-gray-100 border border-gray-300 p-3 mb-4 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="title bg-gray-100  dark:bg-gray-800 dark:text-white border border-gray-300 p-3 mb-4 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
                     spellCheck="false"
                     placeholder="Question Title"
                     type="text"
@@ -95,7 +95,7 @@ const CreateQuestion = () => {
                     onChange={(e) => setTitle(e.target.value)}
                 />
                 <textarea
-                    className="description bg-gray-100 sec p-3 h-40 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="description bg-gray-100  dark:bg-gray-800 dark:text-white sec p-3 h-40 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
                     spellCheck="false"
                     placeholder="Describe your question here"
                     value={description}

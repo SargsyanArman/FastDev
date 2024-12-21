@@ -24,7 +24,7 @@ const SidebarLeft = () => {
     const routes = ['/', '/all-posts', '/all-questions', '/all-authors'];
 
     return (
-        <div className='sidebar hidden sm:flex sm:w-[114px] lg:w-[261px] flex-col gap-5 text-[#18181b] pt-14 border-r-2 overflow-y-auto overflow-x-hidden flex-shrink-0'>
+        <div className='sidebar hidden sm:flex sm:w-[114px] lg:w-[261px] flex-col gap-5 text-[#18181b]   dark:text-white pt-14 border-r-2 overflow-y-auto overflow-x-hidden flex-shrink-0'>
             <SidebarLeftItem icon={icons} text={texts} routes={routes} />
             <div className='flex flex-col gap-5 w-full pl-8 mt-5'>
                 {!isAuth.id ? (

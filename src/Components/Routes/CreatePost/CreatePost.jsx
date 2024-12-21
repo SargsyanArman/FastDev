@@ -84,9 +84,9 @@ const CreatePost = () => {
 
     return (
         <div className="flex flex-col items-center gap-6 my-7 mx-5 overflow-y-auto w-[953px] max-h-[100vh-122px] scroll-main">
-            <form onSubmit={handleSubmit} className="editor w-full max-w-2xl flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg bg-white rounded-lg">
+            <form onSubmit={handleSubmit} className="editor w-full max-w-2xl flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg bg-white rounded-lg  dark:bg-gray-700 dark:text-white">
                 <input
-                    className="title bg-gray-100 border border-gray-300 p-3 mb-4 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="title bg-gray-100 border border-gray-300 p-3 mb-4 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500  dark:bg-gray-800 dark:text-white"
                     spellCheck="false"
                     placeholder="Title"
                     type="text"
@@ -94,7 +94,7 @@ const CreatePost = () => {
                     onChange={(e) => setTitle(e.target.value)}
                 />
                 <textarea
-                    className="description bg-gray-100 sec p-3 h-40 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="description bg-gray-100 sec p-3 h-40 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500  dark:bg-gray-800 dark:text-white"
                     spellCheck="false"
                     placeholder="Describe everything about this post here"
                     value={description}

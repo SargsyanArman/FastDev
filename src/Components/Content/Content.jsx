@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 
 const Content = () => {
     return (
-        <div className='flex bg-[#F9F8F8] w-full mt-6 h-[605px] overflow-y-auto max-h-[calc(100vh-122px)]'>
+        <div className='flex bg-[#F9F8F8] w-full mt-6 h-[605px] overflow-y-auto max-h-[calc(100vh-122px)]  dark:bg-gray-700 dark:text-white'>
             <SidebarLeft />
             <Outlet />
             <SidebarR />

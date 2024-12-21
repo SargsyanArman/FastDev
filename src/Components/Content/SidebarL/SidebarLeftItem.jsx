@@ -10,7 +10,7 @@ const SidebarLeftItem = ({ icon, text, routes }) => {
                         to={routes[index]}
                         key={index}
                         className={({ isActive }) =>
-                            `h-[50px] w-[50px] p-[15px] lg:flex items-center lg:h-14 lg:w-[216px] lg:p-[10px] rounded-lg text-[18px] cursor-pointer list-none ${isActive ? 'bg-red-500 text-white' : 'hover:bg-[#E2E8F0]'}`
+                            `h-[50px] w-[50px] p-[15px] lg:flex items-center lg:h-14 lg:w-[216px] lg:p-[10px]  rounded-lg text-[18px] cursor-pointer list-none ${isActive ? 'bg-red-500 text-white' : 'hover:bg-[#E2E8F0] dark:hover:text-[#4B5563]'}`
                         }
                     >
                         {item}
