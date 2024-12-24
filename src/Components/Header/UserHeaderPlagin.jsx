@@ -69,7 +69,7 @@ const UserHeaderPlagin = () => {
             <i class="fa-solid fa-bell text-[20px] icon-header" onClick={() => navigate('/notifications')}></i>
             <i className="fa-regular fa-user relative text-[20px] icon-header mx-9 pos" onClick={handleUserClick} id="user">
                 {userOpen && (
-                    <ul ref={userMenuRef} className='flex flex-col text-zinc-700 absolute text-[16px] w-[300px] h-auto bg-slate-200 top-[33px] left-[-268px]'>
+                    <ul ref={userMenuRef} className='flex flex-col  text-zinc-700 absolute text-[16px] w-[300px] h-auto bg-slate-200 top-[33px] left-[-268px]'>
                         {user.token ? (
                             <>
                                 <li>

@@ -49,8 +49,8 @@ const SidebarLeft = () => {
 
             <div id="sidebar-footer" className='hidden lg:block mt-auto mb-5'>
                 <div className="flex flex-row justify-center mb-[10px]">
-                    <button className="btn-2">About us</button>
-                    <button className="btn-2">Advertise</button>
+                    <button className="btn-2  dark:bg-gray-700 dark:text-white dark:hover:bg-gray-800">About us</button>
+                    <button className="btn-2  dark:bg-gray-700 dark:text-white  dark:hover:bg-gray-800">Advertise</button>
                 </div>
                 <p className='w-[214px] h-[32px] text-[12px] pl-[34px]'>
                     © 2024 <a href="#" className='text-ef4444'>FastDev.NET.</a> All rights reserved.

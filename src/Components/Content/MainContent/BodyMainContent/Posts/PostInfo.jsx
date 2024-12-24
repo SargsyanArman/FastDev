@@ -8,7 +8,7 @@ const PostInfo = ({ post }) => {
     };
 
     return (
-        <div className='text-[#27272a] text-xs mt-6'>
+        <div className='text-[#27272a] text-xs mt-6 dark:bg-gray-700  dark:text-white'>
             <div className='flex justify-between py-[5px]'>
                 <span className='cursor-pointer hover:text-red-400'>
                     <span className='font-bold transition-none'>{post.author} </span>

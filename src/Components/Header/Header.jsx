@@ -16,7 +16,7 @@ const Header = () => {
                 </button>
             </div>
             <SearchHeader />
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-6">
                 <ThemeToggle /> 
             <UserHeaderPlagin />
            </div> 

@@ -10,7 +10,7 @@ const AuthorsItem = ({ user }) => {
   };
 
   return (
-    <div className='flex flex-col items-center justify-center border bg-white p-8 hover:shadow-dark-100 w-[260px] rounded-xl'>
+    <div className='flex flex-col items-center justify-center border bg-white p-8 shadow-md  hover:shadow-lg hover:shadow-dark-100 w-[260px] rounded-xl dark:bg-gray-700 dark:border-gray-800 dark:text-white'>
       <img
         src={user.photo || user_img}
         className='rounded-full h-[150px] w-[150px] cursor-pointer'

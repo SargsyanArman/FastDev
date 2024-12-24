@@ -10,7 +10,7 @@ const QuestionsItem = ({ question }) => {
     };
 
     return (
-        <div className='bg-zinc-100 rounded-[10px] p-9 w-full sm:max-w-[640px] md:max-w-[760px] lg:max-w-[890px]'>
+        <div className='bg-zinc-100 rounded-[10px] p-9 w-full sm:max-w-[640px] md:max-w-[760px] lg:max-w-[890px] dark:bg-gray-800  dark:text-white'>
             <Link to={`/question/${question.id}`}>
                 <div>
                     <button className='text-[20px] hover:text-red-500 font-bold '>
@@ -19,11 +19,11 @@ const QuestionsItem = ({ question }) => {
                 </div>
             </Link>
 
-            <div className='mt-6 flex flex-wrap items-center justify-between gap-3'>
+            <div className='mt-6 flex flex-wrap items-center justify-between gap-3 '>
                 <Link to={`/question/${question.id}`}>
                     <button className="flex items-center justify-center gap-1">
                         <img src={question?.imageUrl || logo_img} className='h-[25px] w-[25px] rounded-full' />
-                        <span className='cursor-pointer text-[14px] text-zinc-800 flex items-center gap-1 hover:text-red-400'>
+                        <span className='cursor-pointer text-[14px] text-zinc-800 flex items-center gap-1 hover:text-red-400  dark:text-white'>
                             {question?.author}
                             <span className='text-[12px] transition-none'> asked {formatDate(question.createdAt)}</span>
                         </span>
